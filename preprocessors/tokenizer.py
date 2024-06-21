@@ -43,7 +43,7 @@ class Tokenizer:
     def filter(cls, tokens: List[str]):
         filtered_tokens = []
         for token in tokens:
-            if token in STOP_WORDS:
+            if token in STOP_WORDS or token.isnumeric():
                 continue
             filtered_tokens.append(token)
         return filtered_tokens
@@ -53,4 +53,3 @@ class Tokenizer:
         tokens = re.findall(pattern=r"\b\w+\b", string=word.lower())
         tokens = cls.filter(tokens)
         return tokens
-
