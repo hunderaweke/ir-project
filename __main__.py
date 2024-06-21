@@ -1,8 +1,19 @@
 from preprocessors.tokenizer import Tokenizer
 from preprocessors.stemmer import MainStemmer
+from utils.index_file import IndexFileBuilder
 
-i = """The quick brown fox jumps over the lazy dog. While the dog was sleeping, the fox was busy exploring the surroundings. 
-This scenario shows how agile and swift foxes are. On the other hand, dogs are loyal and protective, always ready to defend their territory.
-In this example, we see that both animals have their unique characteristics and behaviors. Such interactions between animals can be fascinating to observe."""
-tokens = Tokenizer.tokenize(i)
-print(MainStemmer.stem(tokens))
+documents = [
+    "The quick brown fox jumps over the lazy dog.",
+    "The quick red fox jumps over the sleepy cat.",
+    "A fast blue fox leaps over the tired dog.",
+    "Cunning foxes are jumping over a lazy hound.",
+    "A group of lazy dogs were being jumped over by quick foxes.",
+    "The tired fox quickly leapt over the sleeping cat.",
+    "Several brown foxes have jumped over lazy dogs.",
+    "A quick fox will jump over the lazy dog.",
+    "The lazy dog was jumped over by a quick fox.",
+    "Quick brown foxes are leaping over lazy dogs.",
+    "The sleepy cat was being jumped over by the fast fox.",
+]
+
+print(IndexFileBuilder.build(documents))
