@@ -1,10 +1,9 @@
 import os
 
 from pathlib import Path
-from preprocessors.tokenizer import Tokenizer
-from preprocessors.stemmer import MainStemmer, PorterStemmer
-from ranker.vector_space import TfIdfVectorizer
-from utils.index_file import IndexFileBuilder
+from preprocessors import MainStemmer, Tokenizer
+from ranker import TfIdfVectorizer
+from utils import IndexFileBuilder
 
 index_to_name = {}
 CORPUS_PATH = Path.cwd() / "corpus"
