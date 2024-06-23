@@ -1,0 +1,1 @@
+Web crawlers, also known as spiders or bots, are used by search engines to systematically browse the web and index web pages. The indexing process involves storing and organizing the information collected by the crawler to make it easily accessible through search queries.

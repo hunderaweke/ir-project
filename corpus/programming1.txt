@@ -1,0 +1,1 @@
+Programming is the process of creating a set of instructions that tell a computer how to perform a task. Programming languages like Python, Java, and C++ are used to write these instructions. Programming is used in various applications, from web development to data analysis.

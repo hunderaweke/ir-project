@@ -1,0 +1,1 @@
+Object-oriented programming (OOP) is a programming paradigm based on the concept of objects, which can contain data and code. Java, C++, and Python are popular object-oriented programming languages.
