@@ -32,23 +32,49 @@ class TfIdfVectorizer:
                 self.tf_idf_matrix[doc_indx][term_indx] = tf * idf
         return self.tf_idf_matrix
 
-    def rank_docs(self) -> List[float]:
+    def calc_query_vector(self, query):
+        self.query_vector = [0] * self.num_words
+
+        for term in query:
+            if term in self.inverted_index:
+                indx = self.words.index(term)
+                self.query_vector[indx] += 1
+
+        for indx in range(len(self.words)):
+            self.query_vector[indx] *= self.idf[indx]
+        return self.query_vector
+
+    def rank_docs(self, query) -> List[float]:
+        if not hasattr(self, "tf_idf_matrix"):
+            self.calculate_tf_idf()
+        if not hasattr(self, "query_vector"):
+            self.calc_query_vector(query)
         vector_lengths = [
             math.sqrt(
                 sum(self.tf_idf_matrix[doc_indx][i] ** 2 for i in range(self.num_words))
             )
             for doc_indx in range(self.num_docs)
         ]
+        query_vector_length = math.sqrt(
+            sum(self.query_vector[i] ** 2 for i in range(self.num_words))
+        )
         dot_products = [
             sum(
-                self.tf_idf_matrix[self.num_docs - 1][i] * self.tf_idf_matrix[indx][i]
+                self.query_vector[i] * self.tf_idf_matrix[indx][i]
                 for i in range(self.num_words)
             )
-            for indx in range(self.num_docs - 1)
+            for indx in range(self.num_docs)
         ]
-        self.similarity_score = [
-            (dot_products[i] / (vector_lengths[self.num_docs - 1] * vector_lengths[i]))
-            for i in range(self.num_docs - 1)
-            if (vector_lengths[self.num_docs - 1] and vector_lengths[i])
+        similarity_score = [
+            (
+                (
+                    (dot_products[i] / (query_vector_length * vector_lengths[i]))
+                    if (query_vector_length and vector_lengths[i])
+                    else 0
+                ),
+                i,
+            )
+            for i in range(self.num_docs)
         ]
-        return self.similarity_score
+        similarity_score.sort(key=lambda x: x[0])
+        return [indx for _, indx in similarity_score][::-1]
